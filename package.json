@@ -1,0 +1,36 @@
+{
+  "name": "course-creator",
+  "version": "1.0.0",
+  "description": "CLI tool to generate single-page video-driven course web apps",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "bin": {
+    "course-creator": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli/index.js",
+    "example": "node dist/cli/index.js build examples/scout-transcripts/course.json -o dist/example/index.html"
+  },
+  "keywords": [
+    "course",
+    "video",
+    "tutorial",
+    "generator",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "esbuild": "^0.24.0",
+    "marked": "^15.0.0",
+    "highlight.js": "^11.10.0",
+    "chokidar": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

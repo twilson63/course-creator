@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "title": "Working with Call Transcripts in ScoutOS",
+    "description": "Learn to create an agent that fetches and summarizes call transcripts, then automate it with workflows and webhooks",
+    "author": "Scout Team",
+    "estimatedTime": "15 minutes",
+    "difficulty": "intermediate"
+  },
+  "steps": [
+    {
+      "id": "overview",
+      "title": "What We're Building",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "0:00",
+      "content": "./steps/01-overview.md",
+      "estimatedTime": "1 minute",
+      "checkpoint": {
+        "label": "I understand what we're building in this course",
+        "hint": "We'll create an agent, connect it to a workflow, and trigger it via webhook"
+      }
+    },
+    {
+      "id": "create-agent",
+      "title": "Create an Agent Using Scout",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "0:30",
+      "content": "./steps/02-create-agent.md",
+      "estimatedTime": "3 minutes",
+      "checkpoint": {
+        "label": "I've created the Call Transcript Summarizer agent",
+        "hint": "Scout should confirm the agent was created and provide an ID"
+      }
+    },
+    {
+      "id": "configure-agent",
+      "title": "Configure Your Agent",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "3:30",
+      "content": "./steps/03-configure-agent.md",
+      "estimatedTime": "3 minutes",
+      "checkpoint": {
+        "label": "I've added code execution tools and saved my agent",
+        "hint": "Make sure to select 'Execute TypeScript' from the tools menu"
+      }
+    },
+    {
+      "id": "test-agent",
+      "title": "Test Your Agent",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "5:00",
+      "content": "./steps/04-test-agent.md",
+      "estimatedTime": "2 minutes",
+      "checkpoint": {
+        "label": "My agent successfully fetched and summarized a transcript",
+        "hint": "Paste a transcript ID and verify you get a summary back"
+      }
+    },
+    {
+      "id": "create-workflow",
+      "title": "Create a Workflow",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "5:45",
+      "content": "./steps/05-create-workflow.md",
+      "estimatedTime": "3 minutes",
+      "checkpoint": {
+        "label": "I've created and published my workflow",
+        "hint": "Your workflow should have an Input trigger connected to your agent"
+      }
+    },
+    {
+      "id": "add-webhook",
+      "title": "Add a Webhook Trigger",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "7:00",
+      "content": "./steps/06-add-webhook.md",
+      "estimatedTime": "2 minutes",
+      "checkpoint": {
+        "label": "I've created a webhook and copied the URL",
+        "hint": "Click 'Add Webhook' in the workflow panel"
+      }
+    },
+    {
+      "id": "end-to-end-test",
+      "title": "Test End-to-End",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "8:00",
+      "content": "./steps/07-end-to-end.md",
+      "estimatedTime": "3 minutes",
+      "checkpoint": {
+        "label": "I've completed the end-to-end test successfully",
+        "hint": "Generate a new transcript and watch it flow through your workflow"
+      }
+    },
+    {
+      "id": "next-steps",
+      "title": "Next Steps",
+      "videoUrl": "https://share.descript.com/view/XMPvabdMuG2",
+      "videoTimestamp": "12:00",
+      "content": "./steps/08-next-steps.md",
+      "estimatedTime": "1 minute",
+      "checkpoint": {
+        "label": "I'm ready to explore more!"
+      }
+    }
+  ],
+  "resources": [
+    {
+      "label": "Call Transcript Simulator",
+      "url": "https://call-transcript-simulator.onrender.com"
+    },
+    {
+      "label": "ScoutOS Documentation",
+      "url": "https://docs.scoutagent.ai"
+    },
+    {
+      "label": "ScoutOS Studio",
+      "url": "https://app.scoutagent.ai"
+    }
+  ]
+}
