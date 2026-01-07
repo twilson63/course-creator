@@ -381,6 +381,45 @@ function getAppScript(): string {
   function CourseApp({ course }) {
     const courseId = course.meta.title.toLowerCase().replace(/\\s+/g, '-');
     const { currentStepIndex, completedStepIds, goToStep, markComplete, markIncomplete, reset } = useProgress(courseId, course.steps.length);
+
+    // Add copy buttons to code blocks
+    useEffect(function() {
+      var codeBlocks = document.querySelectorAll('.markdown-content pre');
+      var clipboardSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+      var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+      
+      codeBlocks.forEach(function(pre) {
+        if (pre.parentElement && pre.parentElement.classList.contains('code-block-wrapper')) return;
+        
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        
+        var button = document.createElement('button');
+        button.className = 'copy-button';
+        button.setAttribute('data-tooltip', 'Copy to clipboard');
+        button.innerHTML = clipboardSvg;
+        
+        button.addEventListener('click', function() {
+          var codeEl = pre.querySelector('code');
+          var code = codeEl ? codeEl.textContent : pre.textContent;
+          navigator.clipboard.writeText(code || '').then(function() {
+            button.classList.add('copied');
+            button.setAttribute('data-tooltip', 'Copied!');
+            button.innerHTML = checkSvg;
+            setTimeout(function() {
+              button.classList.remove('copied');
+              button.setAttribute('data-tooltip', 'Copy to clipboard');
+              button.innerHTML = clipboardSvg;
+            }, 2000);
+          });
+        });
+        
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(button);
+        wrapper.appendChild(pre);
+      });
+    }, [currentStepIndex]);
+
     const currentStep = course.steps[currentStepIndex];
     const allCompleted = completedStepIds.length === course.steps.length;
 

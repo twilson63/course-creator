@@ -644,3 +644,65 @@ body {
 .hljs-template-variable {
   color: #9cdcfe;
 }
+
+/* Code block with copy button */
+.code-block-wrapper {
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.copy-button.copied {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+
+.copy-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Tooltip */
+.copy-button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 6px;
+  padding: 4px 8px;
+  background: var(--text-primary);
+  color: var(--bg-card);
+  font-size: 12px;
+  font-family: var(--font-sans);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.copy-button:hover::after {
+  opacity: 1;
+}
