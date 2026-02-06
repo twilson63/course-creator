@@ -45,7 +45,30 @@ function chunkTranscript(transcript: string, videoUrl: string) {
 }
 
 /** Build HTML using the original CLI (exec the compiled dist script) */
-export async function buildHtmlFromJson(courseJson: any): Promise<string> {
+export export const buildHtmlFromJson = async (courseJson: any): Promise<string> => {
+  // Write temp JSON file
+  const tmpPath = path.join(process.cwd(), "tmp-course.json");
+  await writeFile(tmpPath, JSON.stringify(courseJson, null, 2), "utf8");
+
+  // Path to the compiled CLI in the cloned repo
+  const cliPath = path.resolve(process.cwd(), "../repo/dist/cli/index.js");
+
+  return new Promise<string>((resolve, reject) => {
+    const child = spawn("node", [cliPath, "build", tmpPath, "-o", "-", "--standalone"], {
+      stdio: ["ignore", "pipe", "pipe"]
+    });
+    let out = "";
+    let err = "";
+    child.stdout.on("data", (d) => (out += d.toString()));
+    child.stderr.on("data", (d) => (err += d.toString()));
+    child.on("close", (code) => {
+      if (code === 0) resolve(out);
+      else reject(new Error(`CLI build failed (code ${code}): ${err}`));
+    });
+  });
+};
+
+
   // Write temp JSON file
   const tmpPath = path.join(process.cwd(), "tmp-course.json");
   await writeFile(tmpPath, JSON.stringify(courseJson, null, 2), "utf8");
