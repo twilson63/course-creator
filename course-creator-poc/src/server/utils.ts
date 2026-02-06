@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { spawn } from "child_process";
 import path from "path";
-import { readFile, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 
 /** Extract YouTube video ID from a URL */
 function getVideoId(url: string): string {
@@ -44,14 +44,14 @@ function chunkTranscript(transcript: string, videoUrl: string) {
   return steps;
 }
 
-/** Build HTML using the original CLI (exec the compiled dist script) */
-export export const buildHtmlFromJson = async (courseJson: any): Promise<string> => {
-  // Write temp JSON file
+/** Build HTML using the compiled CLI from the cloned original repo */
+export const buildHtmlFromJson = async (courseJson: any): Promise<string> => {
+  // Write a temporary JSON file
   const tmpPath = path.join(process.cwd(), "tmp-course.json");
   await writeFile(tmpPath, JSON.stringify(courseJson, null, 2), "utf8");
 
-  // Path to the compiled CLI in the cloned repo
-  const cliPath = path.resolve(process.cwd(), "../repo/dist/cli/index.js");
+  // Path to the CLI that was built during the Docker build step
+  const cliPath = path.resolve(process.cwd(), "repo/dist/cli/index.js");
 
   return new Promise<string>((resolve, reject) => {
     const child = spawn("node", [cliPath, "build", tmpPath, "-o", "-", "--standalone"], {
@@ -59,37 +59,14 @@ export export const buildHtmlFromJson = async (courseJson: any): Promise<string>
     });
     let out = "";
     let err = "";
-    child.stdout.on("data", (d) => (out += d.toString()));
-    child.stderr.on("data", (d) => (err += d.toString()));
-    child.on("close", (code) => {
+    child.stdout.on("data", d => (out += d.toString()));
+    child.stderr.on("data", d => (err += d.toString()));
+    child.on("close", code => {
       if (code === 0) resolve(out);
       else reject(new Error(`CLI build failed (code ${code}): ${err}`));
     });
   });
 };
-
-
-  // Write temp JSON file
-  const tmpPath = path.join(process.cwd(), "tmp-course.json");
-  await writeFile(tmpPath, JSON.stringify(courseJson, null, 2), "utf8");
-
-  // Path to the compiled CLI in the cloned repo
-  const cliPath = path.resolve(process.cwd(), "../repo/dist/cli/index.js");
-
-  return new Promise<string>((resolve, reject) => {
-    const child = spawn("node", [cliPath, "build", tmpPath, "-o", "-", "--standalone"], {
-      stdio: ["ignore", "pipe", "pipe"]
-    });
-    let out = "";
-    let err = "";
-    child.stdout.on("data", (d) => (out += d.toString()));
-    child.stderr.on("data", (d) => (err += d.toString()));
-    child.on("close", (code) => {
-      if (code === 0) resolve(out);
-      else reject(new Error(`CLI build failed (code ${code}): ${err}`));
-    });
-  });
-}
 
 /** Main helper – given a YouTube URL, returns JSON + HTML */
 export async function generateCourseFromYouTube(youtubeUrl: string) {
