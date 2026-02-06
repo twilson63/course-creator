@@ -15,7 +15,7 @@ fi
 
 # Install and build the original CLI (needed for HTML generation)
 cd repo
-npm ci
+npm install
 npx tsc
 cd ..
 
