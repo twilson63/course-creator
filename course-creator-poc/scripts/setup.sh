@@ -16,7 +16,7 @@ fi
 # Install and build the original CLI (needed for HTML generation)
 cd repo
 npm ci
-npm run build
+npx tsc
 cd ..
 
 echo "Setup complete. You can now run 'npm run dev' to start the PoC server."
